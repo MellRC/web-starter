@@ -66,6 +66,7 @@ npm run dev
 | 内容测试 | `tests/content.test.mjs` | JSON-LD 与页面事实不一致没人发现 |
 | 事实检查 | `scripts/check-facts.mjs` | 硬编码电话、TODO/XXXX 占位符上线 |
 | 资源预算 | `scripts/check-assets.mjs` | public 205.8 MB、引用不存在的图 |
+| 依赖与包管理器 | `scripts/check-deps.mjs` | 双 lock 文件、gsap 与 framer-motion 同时存在、import 了未声明的包 |
 | lint/format | `eslint.config.mjs`、`.prettierrc.json` | 裸 `<img>`、hook 依赖、格式噪音 |
 | 样式约束 | `stylelint.config.mjs` | hex 字面量、`!important`、裸 z-index |
 | CI | `.github/workflows/check.yml` | 改坏了没人拦 |

@@ -23,4 +23,5 @@ jobs:
       - run: npm test
       - run: npm run check:facts
       - run: npm run check:assets
+      - run: npm run check:deps
       - run: npm run build
