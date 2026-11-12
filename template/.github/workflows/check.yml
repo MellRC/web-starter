@@ -1,0 +1,26 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      # 需要 package-lock.json 已提交（首次 npm install 后提交一次）。
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run stylelint
+      - run: npm test
+      - run: npm run check:facts
+      - run: npm run check:assets
+      - run: npm run build

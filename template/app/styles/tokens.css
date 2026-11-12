@@ -1,0 +1,59 @@
+/* 全站唯一允许写死设计值的地方。
+   规则：其他 CSS 只允许 var(--token)，stylelint 会检查 hex 字面量。 */
+:root {
+  /* ---------- 颜色（8 个角色） ---------- */
+  --color-primary: #c96442; /* 品牌强调 */
+  --color-primary-strong: #a94f35; /* 小字用主色时改用它，保证对比度 ≥ 4.5:1 */
+  --color-surface: #faf9f5; /* 页面/卡片底色 */
+  --color-surface-muted: #ede9de; /* 次级区块 */
+  --color-border: #dad9d4;
+  --color-text: #141513;
+  --color-text-muted: #5c5a55;
+  --color-inverse: #faf9f5; /* 深色区块上的文字 */
+  --color-overlay: rgb(20 20 19 / 50%);
+
+  /* ---------- 字号（7 档，按角色用） ---------- */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.5rem, 2.2vw, 2rem);
+  --text-display: clamp(2.25rem, 5vw, 4rem);
+
+  /* ---------- 间距（8 档，全部为 4 的倍数） ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ---------- 圆角（3 档） ---------- */
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* ---------- 层级（6 档，禁止裸数字） ---------- */
+  --z-content: 1;
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-toast: 300;
+
+  /* ---------- 动效（时长 3 档 + 缓动 1 种） ---------- */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------- 版式 ---------- */
+  --page-max: 1200px;
+  --page-gutter: clamp(20px, 5vw, 48px);
+
+  /* ---------- 断点（CSS 变量不能用于媒体查询，只作为约定记录） ----------
+     ≤ 639px / 640–1023px / ≥ 1024px
+     短屏例外：(min-width: 1024px) and (max-height: 820px)
+     新断点必须先在这里登记，否则视为违规。 */
+}

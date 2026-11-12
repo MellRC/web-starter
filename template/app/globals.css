@@ -1,0 +1,21 @@
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+
+/* 工具类：只放跨区块复用、且与具体组件无关的基类。
+   新增前先问：它会不会被 3 个以上区块用到？不会就写进组件自己的 module。 */
+.u-container {
+  width: min(calc(100% - var(--page-gutter) * 2), var(--page-max));
+  margin-inline: auto;
+}
+
+.u-section {
+  padding-block: clamp(64px, 8vw, 120px);
+}
+
+.u-eyebrow {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}

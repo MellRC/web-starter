@@ -1,0 +1,11 @@
+# 基座仓库自身忽略规则（template/ 里另有一份给生成的项目用）
+node_modules/
+.next/
+.next-validation/
+.out/
+build/
+.acl-*/
+.acl-recovery/
+*.log
+.DS_Store
+.env*.local

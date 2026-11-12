@@ -1,0 +1,15 @@
+# 依赖与构建产物
+node_modules/
+.next/
+.next-validation/
+out/
+build/
+
+# 临时与工具产物（不要进仓库）
+.acl-*/
+.acl-recovery/
+*.log
+.DS_Store
+
+# 环境变量
+.env*.local
