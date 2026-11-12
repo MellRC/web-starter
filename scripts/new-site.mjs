@@ -26,10 +26,11 @@ await cp(TEMPLATE, target, {
   filter: (source) => !/[\\/](node_modules|\.next|\.git)([\\/]|$)/.test(source),
 });
 
-// 包名用目录名，避免复制出来还叫 web-starter。
+// 包名用目录名，版本从 0.1.0 起，避免复制出来还叫 web-starter。
 const packageJsonPath = join(target, "package.json");
 const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
 packageJson.name = basename(target).replace(/[^a-zA-Z0-9-]/g, "-").toLowerCase() || "web-site";
+packageJson.version = "0.1.0";
 await writeFile(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`, "utf8");
 
 console.log(`✓ 已生成：${target}`);

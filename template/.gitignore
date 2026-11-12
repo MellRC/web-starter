@@ -13,3 +13,7 @@ build/
 
 # 环境变量
 .env*.local
+
+# 图片流水线的原始素材（体积大，只保留目录占位）
+media/raw/*
+!media/raw/.gitkeep

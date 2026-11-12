@@ -1,0 +1,20 @@
+/* 入场动画：隐藏只在 JS 武装后发生（data-armed），SSR/无 JS 时内容始终可见。 */
+.reveal {
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+.reveal[data-armed="true"]:not([data-revealed="true"]) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal[data-armed="true"]:not([data-revealed="true"]) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -14,8 +14,7 @@ const TOTAL_LIMIT = 60 * 1024 * 1024; // public 总量 ≤ 60 MB
 
 const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg"]);
 const VIDEO_EXT = new Set([".mp4", ".webm"]);
-const ASSET_EXT = new Set([...IMAGE_EXT, ...VIDEO_EXT, ".woff2", ".ico"]);
-const CODE_EXT = new Set([".js", ".jsx", ".mjs"]);
+const CODE_EXT = new Set([".js", ".jsx", ".mjs", ".ts", ".tsx"]);
 
 const problems = [];
 

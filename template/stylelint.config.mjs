@@ -1,6 +1,6 @@
 // 目标：让"设计值只能来自 tokens"这条规则由机器执行。
 // 跑法：npm run stylelint
-export default {
+const config = {
   extends: ["stylelint-config-standard"],
   rules: {
     // 颜色只允许 var(--color-*)；tokens.css 是本文件里唯一例外（见 overrides）。
@@ -11,6 +11,8 @@ export default {
     "declaration-property-value-allowed-list": {
       "z-index": ["/^var\\(--z-[a-z-]+\\)$/"],
     },
+    // 允许 @import "x.css" 的字符串写法（现代 CSS 推荐），不强制 url()。
+    "import-notation": "string",
     // 以下为风格类规则，容易与格式化工具打架，先关掉减少噪音。
     "custom-property-pattern": null,
     "selector-class-pattern": null,
@@ -37,3 +39,6 @@ export default {
     },
   ],
 };
+
+export default config;
+

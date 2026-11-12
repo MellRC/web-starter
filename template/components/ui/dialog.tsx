@@ -1,37 +1,34 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, type MouseEvent, type ReactNode } from "react";
+
+import { useOverlayLayer } from "../../lib/overlay";
 import styles from "./dialog.module.css";
 
 // 统一弹窗：用浏览器原生 <dialog> 的 showModal()。
 // 原生能力已经免费提供：焦点留在弹窗内、背景不可交互、Esc 关闭、顶层渲染。
-// 我们只补两件原生不管的事：页面滚动锁（引用计数，支持多层）和关闭后还焦点。
-let openCount = 0;
+// 这里只补两件原生不管的事：页面滚动锁（lib/overlay）和关闭后还焦点。
+export type DialogProps = {
+  open?: boolean;
+  title: string;
+  onClose?: () => void;
+  children: ReactNode;
+};
 
-function lockScroll() {
-  openCount += 1;
-  if (openCount === 1) document.documentElement.style.overflow = "hidden";
-}
-
-function unlockScroll() {
-  openCount = Math.max(0, openCount - 1);
-  if (openCount === 0) document.documentElement.style.overflow = "";
-}
-
-export default function Dialog({ open = false, onClose, title, children }) {
-  const dialogRef = useRef(null);
-  const restoreFocusRef = useRef(null);
-  const lockedRef = useRef(false);
+export default function Dialog({ open = false, title, onClose, children }: DialogProps) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
+
+  useOverlayLayer(open);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
     if (open && !dialog.open) {
-      restoreFocusRef.current = document.activeElement;
-      lockScroll();
-      lockedRef.current = true;
+      restoreFocusRef.current =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
       dialog.showModal();
       return;
     }
@@ -44,10 +41,6 @@ export default function Dialog({ open = false, onClose, title, children }) {
     if (!dialog) return undefined;
 
     const handleClose = () => {
-      if (lockedRef.current) {
-        lockedRef.current = false;
-        unlockScroll();
-      }
       onClose?.();
       const target = restoreFocusRef.current;
       if (target?.isConnected) requestAnimationFrame(() => target.focus());
@@ -57,25 +50,16 @@ export default function Dialog({ open = false, onClose, title, children }) {
     return () => dialog.removeEventListener("close", handleClose);
   }, [onClose]);
 
-  // 组件在打开状态下被卸载时，别把滚动锁漏在页面上。
-  useEffect(
-    () => () => {
-      if (lockedRef.current) {
-        lockedRef.current = false;
-        unlockScroll();
-      }
-    },
-    [],
-  );
+  const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
+  };
 
   return (
     <dialog
       ref={dialogRef}
       className={styles.dialog}
       aria-labelledby={titleId}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) event.currentTarget.close();
-      }}
+      onClick={handleBackdropClick}
     >
       <div className={styles.panel}>
         <header className={styles.header}>

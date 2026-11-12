@@ -1,6 +1,12 @@
 // FAQ 内容：页面可见内容与 FAQPage 结构化数据共用同一份数据，
 // 不允许为了 schema 再手抄一遍问答。
-export const faqs = [
+export type FaqItem = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
+export const faqs: FaqItem[] = [
   {
     id: "service-area",
     question: "你们服务哪些区域？",

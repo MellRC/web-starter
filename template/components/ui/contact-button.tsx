@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+
 import Dialog from "./dialog";
 import styles from "./contact-button.module.css";
 
 // 只有"需要交互"的这一小块是客户端组件；页面其余部分保持服务端渲染。
-export default function ContactButton({ children }) {
+export type ContactButtonProps = {
+  children: ReactNode;
+};
+
+export default function ContactButton({ children }: ContactButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (

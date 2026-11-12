@@ -1,6 +1,29 @@
 // 唯一事实来源：品牌、联系方式、地址、服务区域、域名。
 // 规则：这些值只允许出现在本文件。页面、SEO metadata、JSON-LD、页脚全部从这里取。
-export const site = {
+export type SiteAddress = {
+  street: string;
+  locality: string;
+  region: string;
+  country: string;
+};
+
+export type SiteConfig = {
+  name: string;
+  legalName: string;
+  title: string;
+  description: string;
+  orgType: string;
+  url: string;
+  locale: string;
+  ogImage: string;
+  logo: string;
+  phone: string;
+  address: SiteAddress;
+  areaServed: string[];
+  icp: string;
+};
+
+export const site: SiteConfig = {
   // 基本信息
   name: "示例品牌",
   legalName: "示例品牌（太原）有限公司",

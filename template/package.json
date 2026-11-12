@@ -1,6 +1,6 @@
 {
   "name": "web-starter",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,11 +9,13 @@
     "start": "next start",
     "lint": "eslint .",
     "stylelint": "stylelint \"app/**/*.css\" \"components/**/*.css\"",
-    "test": "node tests/content.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/content.test.ts",
     "check:facts": "node scripts/check-facts.mjs",
     "check:assets": "node scripts/check-assets.mjs",
     "check:deps": "node scripts/check-deps.mjs",
-    "check": "npm run lint && npm run stylelint && npm test && npm run check:facts && npm run check:assets && npm run check:deps",
+    "media": "node scripts/optimize-images.mjs",
+    "check": "npm run lint && npm run stylelint && npm run typecheck && npm test && npm run check:facts && npm run check:assets && npm run check:deps",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -22,10 +24,16 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.4.2",
     "prettier": "^3.3.0",
+    "sharp": "^0.33.0",
     "stylelint": "^16.0.0",
-    "stylelint-config-standard": "^36.0.0"
+    "stylelint-config-standard": "^36.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
   }
 }

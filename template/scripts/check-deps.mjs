@@ -1,4 +1,4 @@
-﻿// 依赖与包管理器检查：
+// 依赖与包管理器检查：
 // 1) 只能有一个锁文件 / 一个包管理器；
 // 2) 同一能力（动画、图标、日期…）只允许一个库；
 // 3) 代码里 import 的包必须已声明，声明了但没用的给出警告。
@@ -128,7 +128,7 @@ for (const [name, file] of imported) {
 // 框架与工具链本身不会被业务代码直接 import，避免误报
 const IGNORE_UNUSED = new Set([
   "next", "react", "react-dom", "typescript", "eslint", "eslint-config-next",
-  "prettier", "stylelint", "stylelint-config-standard",
+  "prettier", "stylelint", "stylelint-config-standard", "tsx",
 ]);
 for (const name of declared.keys()) {
   if (imported.has(name) || IGNORE_UNUSED.has(name) || name.startsWith("@types/")) continue;

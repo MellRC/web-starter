@@ -7,7 +7,7 @@ const ROOT = process.cwd();
 // 只扫应用代码：scripts/ 是检查工具本身，不参与事实扫描，避免自检误报。
 const SCAN_DIRS = ["app", "components", "lib", "tests"];
 const SKIP_DIRS = new Set(["node_modules", ".next", ".git", "public"]);
-const CODE_EXT = new Set([".js", ".jsx", ".mjs"]);
+const CODE_EXT = new Set([".js", ".jsx", ".mjs", ".ts", ".tsx"]);
 const FACTS_FILE = "data/site.mjs";
 
 // 中国大陆手机号：允许 +86 前缀

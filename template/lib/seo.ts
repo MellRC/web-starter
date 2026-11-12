@@ -1,10 +1,25 @@
 // SEO 与结构化数据的唯一生成入口。
-// 原则：metadata 与 JSON-LD 都由 data/site.mjs 派生，保证页面可见事实 == 告诉搜索引擎的事实。
-import { site } from "../data/site.mjs";
+// 原则：metadata 与 JSON-LD 都由 data/site.ts 派生，保证页面可见事实 == 告诉搜索引擎的事实。
+import type { Metadata } from "next";
 
-const absolute = (path = "/") => new URL(path, site.url).toString();
+import type { FaqItem } from "../data/faq";
+import { site } from "../data/site";
 
-export function buildMetadata({ title = site.title, description = site.description, path = "/" } = {}) {
+export type SchemaNode = Record<string, unknown>;
+
+type MetadataInput = {
+  title?: string;
+  description?: string;
+  path?: string;
+};
+
+const absolute = (path = "/"): string => new URL(path, site.url).toString();
+
+export function buildMetadata({
+  title = site.title,
+  description = site.description,
+  path = "/",
+}: MetadataInput = {}): Metadata {
   return {
     metadataBase: new URL(site.url),
     title,
@@ -29,8 +44,8 @@ export function buildMetadata({ title = site.title, description = site.descripti
   };
 }
 
-export function organizationSchema() {
-  const node = {
+export function organizationSchema(): SchemaNode {
+  const node: SchemaNode = {
     "@type": site.orgType || "Organization",
     "@id": `${absolute("/")}#organization`,
     name: site.name,
@@ -45,12 +60,14 @@ export function organizationSchema() {
     },
     areaServed: site.areaServed.map((name) => ({ "@type": "AdministrativeArea", name })),
   };
+
   if (site.legalName) node.legalName = site.legalName;
   if (site.logo) node.logo = absolute(site.logo);
+
   return node;
 }
 
-export function websiteSchema() {
+export function websiteSchema(): SchemaNode {
   return {
     "@type": "WebSite",
     "@id": `${absolute("/")}#website`,
@@ -61,7 +78,7 @@ export function websiteSchema() {
   };
 }
 
-export function faqSchema(items) {
+export function faqSchema(items: FaqItem[]): SchemaNode {
   return {
     "@type": "FAQPage",
     "@id": `${absolute("/")}#faq`,
@@ -73,6 +90,6 @@ export function faqSchema(items) {
   };
 }
 
-export function graph(...nodes) {
+export function graph(...nodes: SchemaNode[]): { "@context": string; "@graph": SchemaNode[] } {
   return { "@context": "https://schema.org", "@graph": nodes };
 }

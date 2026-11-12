@@ -1,9 +1,11 @@
 import Link from "next/link";
-import ContactButton from "../components/ui/contact-button";
+
 import SectionHeading from "../components/sections/section-heading";
-import { faqs } from "../data/faq.mjs";
-import { site } from "../data/site.mjs";
-import { faqSchema, graph, organizationSchema, websiteSchema } from "../lib/seo.mjs";
+import ContactButton from "../components/ui/contact-button";
+import Reveal from "../components/ui/reveal";
+import { faqs } from "../data/faq";
+import { site } from "../data/site";
+import { faqSchema, graph, organizationSchema, websiteSchema } from "../lib/seo";
 import styles from "./page.module.css";
 
 // 页面是服务端组件：HTML 里直接有标题、正文、FAQ 和链接，抓取器无需执行 JS。
@@ -54,20 +56,26 @@ export default function Home() {
               title="常见问题"
               copy="每条答案先给结论，再给适用条件与依据；页面可见内容与 FAQPage 结构化数据同源。"
             />
-            <ul className={styles.faqList}>
-              {faqs.map((item) => (
-                <li key={item.id} className={styles.faqItem}>
-                  <details>
-                    <summary className={styles.faqQuestion}>{item.question}</summary>
-                    <p className={styles.faqAnswer}>{item.answer}</p>
-                  </details>
-                </li>
-              ))}
-            </ul>
+            <Reveal>
+              <ul className={styles.faqList}>
+                {faqs.map((item) => (
+                  <li key={item.id} className={styles.faqItem}>
+                    <details>
+                      <summary className={styles.faqQuestion}>{item.question}</summary>
+                      <p className={styles.faqAnswer}>{item.answer}</p>
+                    </details>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
         </section>
 
-        <section className={`u-section ${styles.sectionMuted}`} id="contact" aria-labelledby="contact-title">
+        <section
+          className={`u-section ${styles.sectionMuted}`}
+          id="contact"
+          aria-labelledby="contact-title"
+        >
           <div className="u-container">
             <SectionHeading
               eyebrow="CONTACT"
